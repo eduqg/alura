@@ -89,10 +89,12 @@ yarn add react-icons
 ```
 
 
+Redux toolkit: cria a store
+React Redux: prove a store para os componentes
 
 
 ```shell
-
+ yarn add @reduxjs/toolkit react-redux
 
 ```
 
