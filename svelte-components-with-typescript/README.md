@@ -1,107 +1,209 @@
-# This repo is no longer maintained. Consider using `npm init vite` and selecting the `svelte` option or — if you want a full-fledged app framework — use [SvelteKit](https://kit.svelte.dev), the official application framework for Svelte.
+# Curso svelte perfis Alura
 
----
+https://github.com/alura-cursos/svelte-perfis/tree/aula-2
 
-# svelte app
-
-This is a project template for [Svelte](https://svelte.dev) apps. It lives at https://github.com/sveltejs/template.
-
-To create a new project based on this template using [degit](https://github.com/Rich-Harris/degit):
-
-```bash
-npx degit sveltejs/template svelte-app
-cd svelte-app
-```
-
-*Note that you will need to have [Node.js](https://nodejs.org) installed.*
-
-
-## Get started
-
-Install the dependencies...
-
-```bash
-cd svelte-app
+```shell
+node scripts/setupTypeScript.js
 npm install
-```
-
-...then start [Rollup](https://rollupjs.org):
-
-```bash
 npm run dev
 ```
 
-Navigate to [localhost:8080](http://localhost:8080). You should see your app running. Edit a component file in `src`, save it, and reload the page to see your changes.
+Exemplo de estilo global no svelte. Estilos sao por escopo de cada arquivo, desta forma é possível passar um estilo para outro componente
 
-By default, the server will only respond to requests from localhost. To allow connections from other computers, edit the `sirv` commands in package.json to include the option `--host 0.0.0.0`.
-
-If you're using [Visual Studio Code](https://code.visualstudio.com/) we recommend installing the official extension [Svelte for VS Code](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode). If you are using other editors you may need to install a plugin in order to get syntax highlighting and intellisense.
-
-## Building and running in production mode
-
-To create an optimised version of the app:
-
-```bash
-npm run build
+```css
+:global(.titulo) {
+  color: red;
+}
 ```
 
-You can run the newly built app with `npm run start`. This uses [sirv](https://github.com/lukeed/sirv), which is included in your package.json's `dependencies` so that the app will work when you deploy to platforms like [Heroku](https://heroku.com).
+Diretivas. No svelte é quando utilizamos os dois pontos. No caso, a diretiva (Element directives) on, que serve para escutar eventos da dom:
 
+Modificadores (Modifiers) do svelte são adicionados com o pipe |
 
-## Single-page app mode
-
-By default, sirv will only respond to requests that match files in `public`. This is to maximise compatibility with static fileservers, allowing you to deploy your app anywhere.
-
-If you're building a single-page app (SPA) with multiple routes, sirv needs to be able to respond to requests for *any* path. You can make it so by editing the `"start"` command in package.json:
-
-```js
-"start": "sirv public --single"
+```html
+<form on:submit|preventDefault={aoSubmeter}>
 ```
 
-## Using TypeScript
+A diretiva :bind pode alterar valores no script. O input inicia com o valor definido e o usuário ao digitar o input, modifica o let valorInput.
 
-This template comes with a script to set up a TypeScript development environment, you can run it immediately after cloning the template with:
 
-```bash
-node scripts/setupTypeScript.js
+```svelte
+<script lang="ts">
+  let valorInput = 'eduardo';
+</script>
+
+<input type="text" class="input" bind:value={valorInput} />
 ```
 
-Or remove the script via:
+Props
 
-```bash
-rm scripts/setupTypeScript.js
+Definir dentro do script do componente
+
+```svelte
+  export let usuario: IUsuario;
 ```
 
-If you want to use `baseUrl` or `path` aliases within your `tsconfig`, you need to set up `@rollup/plugin-alias` to tell Rollup to resolve the aliases. For more info, see [this StackOverflow question](https://stackoverflow.com/questions/63427935/setup-tsconfig-path-in-svelte).
+E utilizar da seguinte forma 
 
-## Deploying to the web
-
-### With [Vercel](https://vercel.com)
-
-Install `vercel` if you haven't already:
-
-```bash
-npm install -g vercel
+```svelte
+{#if usuario}
+  <Usuario {usuario} />
+{/if}
 ```
 
-Then, from within your project folder:
+No ts config, deixar typescript mais rígido, tipo usuário vai avisar sobre o null
 
-```bash
-cd public
-vercel deploy --name my-project
+```json
+"compilerOptions": {
+  "strictNullChecks": true
+}
 ```
 
-### With [surge](https://surge.sh/)
+```svelte
+Errado
 
-Install `surge` if you haven't already:
+let usuario: IUsuario = null;
 
-```bash
-npm install -g surge
+Certo
+
+let usuario: IUsuario | null = null;
 ```
 
-Then, from within your project folder:
+Variavel pode ser passada do pai para o filho. Com a diretiva bind.
+```svelte
+<Formulario bind:usuario />
+```
 
-```bash
-npm run build
-surge public my-project.surge.sh
+Eventos personalizados. 
+
+
+No componente filho adicionar createEventDispatcher
+
+```svelte
+  const dispatch = createEventDispatcher<{
+    aoAlterarUsuario: IUsuario | null;
+  }>();
+
+  Na funcao adicionar dispatch
+
+  dispatch('aoAlterarUsuario', dadosDoUsuario)
+
+  Alguém precisa escutar o evento. Entao em App.svelte devemos adicionar. Vamos alterar a diretiva bind:
+
+  De <Formulario bind:usuario />
+  Para <Formulario on:aoAlterarUsuario={definirUsuario} />
+
+  function definirUsuario(evento: CustomEvent<IUsuario | null>) {
+    usuario = evento.detail;
+  }
+
+```
+
+Props x Dispatch x Bind
+
+```text
+Props: do pai para o filho;
+
+Dispatch: do filho para o pai;
+
+Bind: via dupla.
+```
+
+Encaminhamento de evento https://svelte.dev/tutorial/event-forwarding
+
+É útil em casos que precisamos enviar evento ao componente avô
+
+```svelte
+const dispatch = createEventDispatcher();
+
+function forward(event) {
+  dispatch('message', event.detail);
+}
+```
+
+Interpolação para adicionar classes
+
+
+```svelte
+
+<input
+  class="input {statusDeErro === 404 && 'erro-input'}"
+/>
+
+Podemos escrever da forma svelte. A classe será adicionada quando a condição é satisfeita
+
+<input
+  class:erro-input={statusDeErro === 404}
+/>
+```
+
+for each
+
+```svelte
+{#each usuario.repositorios_recentes as repositorio}
+  <li>
+    <a
+      href={repositorio.url}
+      target="_blank"
+      rel="noopener"
+      class="repositorio"
+    >
+      {repositorio.nome}
+    </a>
+  </li>
+{/each}
+```
+
+O código escrito na tag script é executado apenas uma vez ao renderizar a tela. Para a variável ser atualizada de acordo com interações na tela utilizamos $. No javascript isso tem o nome de Sintaxe de rótulo. O Svelte aproveitou essa funcionalidade e utilizou o dólar para criar código reativo.
+
+```svelte
+De
+
+<script lang="ts">
+  temRepositorios = Boolean(usuario.repositorios_recentes.length);
+</script>
+
+Para
+
+<script lang="ts">
+  $: temRepositorios = Boolean(usuario.repositorios_recentes.length);
+</script>
+
+Que também pode ser escrito da forma:
+
+<script lang="ts">
+  $: {
+    temRepositorios = Boolean(usuario.repositorios_recentes.length);
+    console.log(temRepositorios);
+  }
+</script>
+```
+
+slot: funciona como children do react
+
+
+```svelte
+
+Componente
+<button type="submit" class="botao">
+  <slot></slot>
+</button>
+
+
+Utilização
+<Botao>
+  Buscar
+  <img src="/assets/lupa.svg" alt="ícone de lupa">
+</Botao>
+
+```
+
+
+```svelte
+
+```
+
+
+```svelte
+
 ```
