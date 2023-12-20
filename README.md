@@ -1,5 +1,12 @@
 # Estudos Alura
 
+## svelte-kit-spa
+
+<img src='./svelte-kit-spa/alura-cook-1.png'>
+<img src='./svelte-kit-spa/alura-cook-2.png'>
+
+svelte, svelte-kit, typescript
+
 ## svelte-components-with-typescript
 
 <img src='./svelte-components-with-typescript/svelte-final.png'>

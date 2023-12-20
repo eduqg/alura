@@ -1,16 +1,16 @@
 <script lang="ts">
-	import Tag from './Tag.svelte';
+	import { minhaLista } from '$lib/stores/minhaLista';
 
-	export let ingredientes: string[];
+	import MeuIngrediente from './MeuIngrediente.svelte';
 </script>
 
 <section class="minha-lista">
 	<h2>Sua lista:</h2>
 
 	<ul class="meus-ingredientes">
-		{#each ingredientes as ingrediente (ingrediente)}
+		{#each $minhaLista as ingrediente (ingrediente)}
 			<li>
-				<Tag ativa={true}>{ingrediente}</Tag>
+				<MeuIngrediente {ingrediente} />
 			</li>
 		{/each}
 	</ul>
