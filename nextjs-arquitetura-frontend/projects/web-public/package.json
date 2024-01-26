@@ -10,17 +10,16 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@alura/design-system": "*",
-    "@alura/utils": "*",
     "next": "^14.1.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "@alura/utils": "*",
+    "@alura/design-system": "*",
+    "styled-components": "^6.1.8"
   },
   "devDependencies": {
-    "@types/node": "20.11.7",
-    "@types/react": "18.2.48",
+    "@alura/tsconfig-commons": "*",
     "next-compose-plugins": "^2.2.1",
-    "next-transpile-modules": "^10.0.1",
-    "typescript": "5.3.3"
+    "next-transpile-modules": "^10.0.1"
   }
 }

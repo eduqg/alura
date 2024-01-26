@@ -7,6 +7,12 @@
       "setup/*"
     ]
   },
+  "dependencies": {
+    "@types/node": "20.11.7",
+    "@types/react": "18.2.48",
+    "@types/styled-components": "^5.1.34",
+    "typescript": "5.3.3"
+  },
   "scripts": {
     "web-public": "yarn workspace @alura/web-public",
     "dev:web-public": "yarn web-public dev",

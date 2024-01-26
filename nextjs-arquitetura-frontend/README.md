@@ -95,7 +95,9 @@ module.exports = withPlugins([withTM], {
 });
 ```
 
+Mover arquivos de tsconfig para serem reaproveitados. Está na pasta setup. A propriedade extends em cada projeto reutiliza a estrutura. O atributo files no package.json diz qual arquivo será exportado de tsconfig-commons. Rodar yarn na pasta raiz ao terminar.
 
+Para styled components, configurar de acordo com _app e _document. Disponíveis no github da vercel exemplos.
 
 ```shell
 
