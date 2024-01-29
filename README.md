@@ -1,5 +1,11 @@
 # Estudos Alura
 
+## nextjs-arquitetura-frontend
+
+<img src='./nextjs-arquitetura-frontend/monorepo-structure.png'>
+
+nextjs, monorepo, typescript, eslint, test
+
 ## svelte-kit-spa
 
 <img src='./svelte-kit-spa/alura-cook-1.png'>
