@@ -1,4 +1,4 @@
-module.exports = {
+const config = {
   async headers() {
     return [
       {
@@ -13,4 +13,17 @@ module.exports = {
       },
     ];
   },
+  experimental: {
+    transpilePackages: ['react-syntax-highlighter', 'swagger-client', 'swagger-ui-react'],
+  },
 };
+
+
+
+const withTM = require('next-transpile-modules')([
+  'react-syntax-highlighter',
+  'swagger-client',
+  'swagger-ui-react',
+]);
+
+module.exports = withTM(config);
