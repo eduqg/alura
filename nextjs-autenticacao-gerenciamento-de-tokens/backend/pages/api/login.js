@@ -44,7 +44,7 @@ const controllerBy = {
  *                properties: 
  *                   username:
  *                      type: string
- *                      default: omariosouto
+ *                      default: eduardo
  *                   password:
  *                      type: string
  *                      default: safepassword
