@@ -1,5 +1,13 @@
 # Estudos Alura
 
+## nextjs-autenticacao-gerenciamento-de-tokens
+
+<img src='./nextjs-autenticacao-gerenciamento-de-tokens/preview-auth-nextjs-1.png'>
+<img src='./nextjs-autenticacao-gerenciamento-de-tokens/preview-auth-nextjs-2.png'>
+
+nextjs, javascript, jsonwebtoken, nookies
+
+
 ## nextjs-arquitetura-frontend
 
 <img src='./nextjs-arquitetura-frontend/monorepo-structure.png'>

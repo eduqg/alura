@@ -47,6 +47,7 @@ const controllers = {
 
 const controllerBy = {
   POST: controllers.refreshTokens,
+  OPTIONS: (_, res) => res.send('OK'),
 }
 
 /**

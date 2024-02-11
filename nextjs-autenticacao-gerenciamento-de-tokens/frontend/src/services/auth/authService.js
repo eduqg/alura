@@ -12,6 +12,20 @@ export const authService = {
       const body = respostaDoServidor.body;
 
       tokenService.save(body.data.access_token);
+
+      return body;
+    })
+    .then(async ({ data }) => {
+      const { refresh_token }   = data;
+
+      const response = await HttpClient(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/refresh`, {
+        method: 'POST',
+        body: {
+          refresh_token
+        }
+      })
+
+      console.log(response);
     })
   },
   async getSession(ctx = null) {
@@ -21,7 +35,9 @@ export const authService = {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`
-      }
+      },
+      ctx,
+      refresh: true,
     })
     .then((response) => {
       if(!response.ok) throw new Error('Não autorizado');
